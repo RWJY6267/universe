@@ -26,20 +26,20 @@
     <div class="layout-container">
         <!-- 左側導航 -->
         <nav class="side-nav">
-            <div class="nav-section history-nav">
-                <button class="tab-btn active" data-tab="history">
+            <div class="nav-section">
+                <button class="tab-btn active" onclick="switchTab('history')">
                     <span class="nav-icon">⭐</span>
                     故事星河
                 </button>
             </div>
-            <div class="nav-section chat-nav">
-                <button class="tab-btn" data-tab="chat">
+            <div class="nav-section">
+                <button class="tab-btn" onclick="switchTab('chat')">
                     <span class="nav-icon">💫</span>
                     繁星對話
                 </button>
             </div>
-            <div class="nav-section editor-nav">
-                <button class="tab-btn" data-tab="editor">
+            <div class="nav-section">
+                <button class="tab-btn" onclick="switchTab('editor')">
                     <span class="nav-icon">✨</span>
                     創作星球
                 </button>
@@ -53,15 +53,14 @@
                 <p class="subtitle">集眾人之思，匯群智之流</p>
             </header>
 
+            <!-- 分頁內容區域 -->
             <div class="tab-content">
-                <!-- 故事星河頁面 -->
-                <div id="history" class="tab-pane active">
+                <section id="history" class="tab-pane active">
                     <h2>故事星河</h2>
                     <div id="story-list" class="story-list"></div>
-                </div>
+                </section>
 
-                <!-- 創作星球頁面 -->
-                <div id="editor" class="tab-pane">
+                <section id="editor" class="tab-pane">
                     <div class="story-section">
                         <h2>創作星球</h2>
                         <div class="story-container">
@@ -72,10 +71,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <!-- 繁星對話頁面 -->
-                <div id="chat" class="tab-pane">
+                <section id="chat" class="tab-pane">
                     <div class="chat-section">
                         <h2>繁星對話</h2>
                         <div id="chat-messages" class="chat-display"></div>
@@ -84,7 +82,7 @@
                             <button id="send-message">發送</button>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
         </main>
 

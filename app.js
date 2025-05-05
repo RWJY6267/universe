@@ -72,11 +72,7 @@ function updatePersonalStories() {
             
             storyCard.addEventListener('click', () => {
                 // 切換到編輯頁面
-                document.querySelectorAll('.tab-btn').forEach(tab => {
-                    if (tab.dataset.tab === 'editor') {
-                        tab.click();
-                    }
-                });
+                switchTab('editor');
             });
             
             myStories.appendChild(storyCard);
@@ -93,35 +89,35 @@ function updateStoryCount() {
 }
 
 // 分頁切換功能
-function initTabs() {
-    document.querySelectorAll('.side-nav .nav-section button').forEach(button => {
-        button.addEventListener('click', () => {
-            // 取消所有按鈕的 active 狀態
-            document.querySelectorAll('.side-nav .nav-section button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // 取消所有內容區域的 active 狀態
-            document.querySelectorAll('.tab-pane').forEach(pane => {
-                pane.classList.remove('active');
-            });
-
-            // 設置當前按鈕為 active
-            button.classList.add('active');
-
-            // 顯示對應的內容區域
-            const targetId = button.getAttribute('data-tab');
-            const targetPane = document.getElementById(targetId);
-            if (targetPane) {
-                targetPane.classList.add('active');
-                
-                // 如果是聊天室，滾動到底部
-                if (targetId === 'chat' && chatMessages) {
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }
-            }
-        });
+function switchTab(tabId) {
+    // 移除所有按鈕的啟用狀態
+    document.querySelectorAll('.side-nav .nav-section .tab-btn').forEach(btn => {
+        btn.classList.remove('active');
     });
+    
+    // 移除所有內容區域的啟用狀態
+    document.querySelectorAll('.tab-pane').forEach(pane => {
+        pane.style.display = 'none';
+        pane.classList.remove('active');
+    });
+    
+    // 啟用目標按鈕
+    const targetBtn = document.querySelector(`.tab-btn[onclick*="${tabId}"]`);
+    if (targetBtn) {
+        targetBtn.classList.add('active');
+    }
+    
+    // 顯示目標內容
+    const targetPane = document.getElementById(tabId);
+    if (targetPane) {
+        targetPane.style.display = 'block';
+        targetPane.classList.add('active');
+        
+        // 如果是聊天室，滾動到底部
+        if (tabId === 'chat' && chatMessages) {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    }
 }
 
 // 用戶名稱儲存
@@ -150,7 +146,6 @@ function updateStoryList() {
         }
     });
 
-    // 將故事按時間排序並顯示
     Array.from(stories.entries())
         .sort((a, b) => b[0] - a[0])
         .forEach(([timestamp, data]) => {
@@ -170,13 +165,7 @@ function updateStoryList() {
             
             // 點擊故事卡片時切換到編輯頁面並載入內容
             storyCard.addEventListener('click', () => {
-                // 切換到編輯頁面
-                document.querySelectorAll('.tab-btn').forEach(tab => {
-                    if (tab.dataset.tab === 'editor') {
-                        tab.click();
-                    }
-                });
-                // 載入故事內容
+                switchTab('editor');
                 updateStoryDisplay();
             });
             
@@ -322,9 +311,6 @@ function sendChatMessage() {
 
 // 初始化頁面
 document.addEventListener('DOMContentLoaded', () => {
-    // 先初始化分頁功能
-    initTabs();
-    
     // 其他初始化
     checkStarname();
     updateStoryList();

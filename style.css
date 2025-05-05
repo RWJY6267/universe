@@ -132,29 +132,10 @@ h2 {
 
 .tab-pane {
     display: none;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
 }
 
 .tab-pane.active {
-    display: block;
-    opacity: 1;
-}
-
-.tab-content {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    padding: 20px;
-    backdrop-filter: blur(5px);
-}
-
-.tab-pane {
-    display: none;
-}
-
-.tab-pane.active {
-    display: block;
+    display: block !important;
 }
 
 /* 故事列表樣式 */
@@ -491,16 +472,11 @@ button:hover {
     color: #fff;
     border: 1px solid rgba(135, 206, 235, 0.2);
     transition: all 0.3s ease;
-    position: relative;
+    cursor: pointer;
     z-index: 10;
-    pointer-events: auto;
 }
 
-.nav-section button:hover {
-    background: rgba(135, 206, 235, 0.1);
-    transform: translateX(5px);
-}
-
+.nav-section button:hover,
 .nav-section button.active {
     background: rgba(135, 206, 235, 0.2);
     border-color: rgba(135, 206, 235, 0.4);
@@ -516,8 +492,16 @@ button:hover {
     min-width: 0;
     width: 100%;
     position: relative;
+    overflow: visible;
 }
 
 header {
     margin-bottom: 30px;
+}
+
+/* 調整故事和聊天區域的容器 */
+.story-section, .chat-section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
