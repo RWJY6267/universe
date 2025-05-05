@@ -94,29 +94,30 @@ function updateStoryCount() {
 
 // 分頁切換功能
 function initTabs() {
-    const tabs = document.querySelectorAll('.side-nav .tab-btn');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            // 移除所有活動狀態
-            tabs.forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-            
-            // 設置當前分頁為活動狀態
-            tab.classList.add('active');
-            const targetId = tab.getAttribute('data-tab');
+    document.querySelectorAll('.side-nav .nav-section button').forEach(button => {
+        button.addEventListener('click', () => {
+            // 取消所有按鈕的 active 狀態
+            document.querySelectorAll('.side-nav .nav-section button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // 取消所有內容區域的 active 狀態
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.classList.remove('active');
+            });
+
+            // 設置當前按鈕為 active
+            button.classList.add('active');
+
+            // 顯示對應的內容區域
+            const targetId = button.getAttribute('data-tab');
             const targetPane = document.getElementById(targetId);
-            
             if (targetPane) {
                 targetPane.classList.add('active');
-                // 如果是聊天室，自動滾動到底部
-                if (targetId === 'chat') {
-                    const chatMessages = document.getElementById('chat-messages');
-                    if (chatMessages) {
-                        chatMessages.scrollTop = chatMessages.scrollHeight;
-                    }
+                
+                // 如果是聊天室，滾動到底部
+                if (targetId === 'chat' && chatMessages) {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
                 }
             }
         });
@@ -321,19 +322,10 @@ function sendChatMessage() {
 
 // 初始化頁面
 document.addEventListener('DOMContentLoaded', () => {
-    // 初始化分頁
+    // 先初始化分頁功能
     initTabs();
     
-    // 延遲檢查一下分頁按鈕是否正確綁定事件
-    setTimeout(() => {
-        const tabs = document.querySelectorAll('.side-nav .tab-btn');
-        if (tabs.length === 0) {
-            console.error('找不到分頁按鈕');
-        } else {
-            console.log(`找到 ${tabs.length} 個分頁按鈕`);
-        }
-    }, 100);
-
+    // 其他初始化
     checkStarname();
     updateStoryList();
     
