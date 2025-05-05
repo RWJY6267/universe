@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>協作故事創作平台</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- GUN.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gun/sea.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>協作故事創作平台</h1>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="history">歷史創作</button>
+            <button class="tab-btn" data-tab="editor">故事編輯</button>
+            <button class="tab-btn" data-tab="chat">聊天室</button>
+        </div>
+
+        <div class="tab-content">
+            <!-- 歷史創作頁面 -->
+            <div id="history" class="tab-pane active">
+                <h2>歷史故事列表</h2>
+                <div id="story-list" class="story-list"></div>
+            </div>
+
+            <!-- 故事編輯頁面 -->
+            <div id="editor" class="tab-pane">
+                <div class="story-section">
+                    <h2>故事編輯</h2>
+                    <div class="story-container">
+                        <div id="story-content" class="story-display"></div>
+                        <div class="story-input">
+                            <textarea id="story-editor" placeholder="在這裡續寫故事..."></textarea>
+                            <button id="submit-story">發布內容</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 聊天室頁面 -->
+            <div id="chat" class="tab-pane">
+                <div class="chat-section">
+                    <h2>即時聊天室</h2>
+                    <div id="chat-messages" class="chat-display"></div>
+                    <div class="chat-input">
+                        <input type="text" id="username" placeholder="你的名字" />
+                        <input type="text" id="message-input" placeholder="輸入訊息..." />
+                        <button id="send-message">發送</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
