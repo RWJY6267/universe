@@ -97,7 +97,9 @@ function initTabs() {
     const tabs = document.querySelectorAll('.side-nav .tab-btn');
     
     tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
+        tab.addEventListener('click', (e) => {
+            e.preventDefault();
+            
             // 移除所有活動狀態
             tabs.forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
@@ -106,8 +108,16 @@ function initTabs() {
             tab.classList.add('active');
             const targetId = tab.getAttribute('data-tab');
             const targetPane = document.getElementById(targetId);
+            
             if (targetPane) {
                 targetPane.classList.add('active');
+                // 如果是聊天室，自動滾動到底部
+                if (targetId === 'chat') {
+                    const chatMessages = document.getElementById('chat-messages');
+                    if (chatMessages) {
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }
+                }
             }
         });
     });
@@ -311,7 +321,19 @@ function sendChatMessage() {
 
 // 初始化頁面
 document.addEventListener('DOMContentLoaded', () => {
+    // 初始化分頁
     initTabs();
+    
+    // 延遲檢查一下分頁按鈕是否正確綁定事件
+    setTimeout(() => {
+        const tabs = document.querySelectorAll('.side-nav .tab-btn');
+        if (tabs.length === 0) {
+            console.error('找不到分頁按鈕');
+        } else {
+            console.log(`找到 ${tabs.length} 個分頁按鈕`);
+        }
+    }, 100);
+
     checkStarname();
     updateStoryList();
     
