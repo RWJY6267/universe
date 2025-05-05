@@ -94,7 +94,8 @@ function updateStoryCount() {
 
 // 分頁切換功能
 function initTabs() {
-    const tabs = document.querySelectorAll('.tab-btn');
+    const tabs = document.querySelectorAll('.side-nav .tab-btn');
+    
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             // 移除所有活動狀態
@@ -103,8 +104,11 @@ function initTabs() {
             
             // 設置當前分頁為活動狀態
             tab.classList.add('active');
-            const targetId = tab.dataset.tab;
-            document.getElementById(targetId).classList.add('active');
+            const targetId = tab.getAttribute('data-tab');
+            const targetPane = document.getElementById(targetId);
+            if (targetPane) {
+                targetPane.classList.add('active');
+            }
         });
     });
 }
