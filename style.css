@@ -7,19 +7,85 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    padding: 20px;
-    background-color: #f0f2f5;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* 星空背景動畫 */
+@keyframes animateStar {
+    from {
+        transform: translateY(0px);
+    }
+    to {
+        transform: translateY(-2000px);
+    }
+}
+
+#stars {
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow: 1804px 1265px #FFF, 365px 332px #FFF, 86px 1888px #FFF, 1888px 484px #FFF, 1045px 426px #FFF, 1831px 1529px #FFF, 666px 504px #FFF;
+    animation: animateStar 50s linear infinite;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+#stars2 {
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    box-shadow: 1671px 1112px #FFF, 286px 1056px #FFF, 1252px 1488px #FFF, 1664px 1568px #FFF, 1159px 1812px #FFF, 1823px 490px #FFF;
+    animation: animateStar 100s linear infinite;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+#stars3 {
+    width: 3px;
+    height: 3px;
+    background: transparent;
+    box-shadow: 1197px 1807px #FFF, 892px 1536px #FFF, 1440px 1191px #FFF, 1829px 492px #FFF, 502px 1778px #FFF, 1619px 1759px #FFF;
+    animation: animateStar 150s linear infinite;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
 }
 
 #app {
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    height: 100%;
 }
 
-h1, h2 {
+h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 3em;
+    background: linear-gradient(45deg, #FFD700, #FFF, #87CEEB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+.subtitle {
+    text-align: center;
+    color: #87CEEB;
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #1a1a1a;
+    color: #87CEEB;
+    text-shadow: 0 0 5px rgba(135,206,235,0.5);
 }
 
 /* 分頁樣式 */
@@ -34,23 +100,31 @@ h1, h2 {
     padding: 10px 20px;
     border: none;
     border-radius: 20px;
-    background: #fff;
-    color: #666;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
     cursor: pointer;
     font-size: 16px;
     transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 .tab-btn.active {
-    background: #0084ff;
-    color: white;
+    background: rgba(135, 206, 235, 0.3);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(135, 206, 235, 0.5);
 }
 
 .tab-content {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
     padding: 20px;
+    backdrop-filter: blur(5px);
 }
 
 .tab-pane {
@@ -68,37 +142,28 @@ h1, h2 {
 }
 
 .story-card {
-    background: #f8f9fa;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
     padding: 15px;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(135, 206, 235, 0.2);
 }
 
 .story-card:hover {
     transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(135, 206, 235, 0.3);
+    background: rgba(255, 255, 255, 0.1);
 }
 
-.story-card h3 {
-    margin-bottom: 10px;
-    color: #1a1a1a;
-}
-
-.story-meta {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 10px;
-}
-
-/* 原有樣式保留並調整 */
 .story-display, .chat-display {
     height: 400px;
     overflow-y: auto;
-    border: 1px solid #ddd;
+    border: 1px solid rgba(135, 206, 235, 0.2);
     padding: 15px;
     margin-bottom: 15px;
-    border-radius: 4px;
-    background: #fff;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .story-input, .chat-input {
@@ -107,10 +172,19 @@ h1, h2 {
 }
 
 textarea, input {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 12px;
+    border: 1px solid rgba(135, 206, 235, 0.2);
+    border-radius: 8px;
     font-size: 14px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+textarea:focus, input:focus {
+    outline: none;
+    border-color: rgba(135, 206, 235, 0.5);
+    box-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
 }
 
 #story-editor {
@@ -124,37 +198,299 @@ textarea, input {
 }
 
 button {
-    padding: 8px 16px;
-    background-color: #0084ff;
-    color: white;
+    padding: 12px 24px;
+    background: rgba(135, 206, 235, 0.3);
+    color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
 }
 
 button:hover {
-    background-color: #0066cc;
+    background: rgba(135, 206, 235, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(135, 206, 235, 0.3);
 }
 
 .chat-message {
     margin-bottom: 10px;
-    padding: 8px;
-    background: #f1f1f1;
-    border-radius: 4px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(135, 206, 235, 0.1);
 }
 
 .story-content {
     white-space: pre-wrap;
     line-height: 1.8;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(135, 206, 235, 0.1);
 }
 
 .username {
     font-weight: bold;
-    color: #0084ff;
+    color: #87CEEB;
+    text-shadow: 0 0 5px rgba(135,206,235,0.5);
 }
 
 .timestamp {
     font-size: 12px;
-    color: #666;
+    color: rgba(255, 255, 255, 0.6);
+    margin-left: 10px;
+}
+
+/* 滾動條美化 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(135, 206, 235, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(135, 206, 235, 0.5);
+}
+
+/* 星名設定對話框 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: rgba(27, 39, 53, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(135, 206, 235, 0.3);
+    border: 1px solid rgba(135, 206, 235, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+}
+
+.modal-content p {
+    color: #87CEEB;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+/* 個人軌域樣式 */
+#personal-orbit {
+    position: static;
+    height: fit-content;
+    top: 20px;
+    right: 20px;
+    width: 250px;
+    background: rgba(27, 39, 53, 0.9);
+    border-radius: 15px;
+    border: 1px solid rgba(135, 206, 235, 0.2);
+    box-shadow: 0 0 20px rgba(135, 206, 235, 0.2);
+    padding: 15px;
+    z-index: 100;
+    backdrop-filter: blur(5px);
+}
+
+.orbit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+}
+
+.user-starname {
+    font-weight: bold;
+    color: #87CEEB;
+    text-shadow: 0 0 5px rgba(135, 206, 235, 0.5);
+}
+
+.story-count {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.orbit-content {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.my-stories {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.my-story-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(135, 206, 235, 0.1);
+}
+
+.my-story-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(135, 206, 235, 0.2);
+}
+
+.my-story-preview {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 5px;
+}
+
+.my-story-date {
+    font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* 整體布局 */
+.layout-container {
+    display: grid;
+    grid-template-columns: 200px 1fr 250px;
+    gap: 20px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* 土星星名設計 */
+#saturn-name {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+.saturn {
+    position: relative;
+    width: 180px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.planet {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(45deg, #c7a374, #e6c89c);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(199, 163, 116, 0.5);
+    position: relative;
+    z-index: 2;
+}
+
+.rings {
+    position: absolute;
+    width: 160px;
+    height: 30px;
+    background: linear-gradient(to right, 
+        rgba(199, 163, 116, 0.2),
+        rgba(230, 200, 156, 0.8),
+        rgba(199, 163, 116, 0.2));
+    border-radius: 50%;
+    transform: rotate(-20deg);
+    z-index: 1;
+}
+
+.user-starname {
+    position: absolute;
+    bottom: -25px;
+    width: 100%;
+    text-align: center;
+    color: #e6c89c;
+    font-size: 1.2em;
+    text-shadow: 0 0 10px rgba(230, 200, 156, 0.5);
+    z-index: 3;
+}
+
+/* 左側導航 */
+.side-nav {
+    background: rgba(27, 39, 53, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: fit-content;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(135, 206, 235, 0.2);
+}
+
+.nav-section button {
+    width: 100%;
+    text-align: left;
+    padding: 12px 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1em;
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(135, 206, 235, 0.2);
+    transition: all 0.3s ease;
+}
+
+.nav-section button:hover {
+    background: rgba(135, 206, 235, 0.1);
+    transform: translateX(5px);
+}
+
+.nav-section button.active {
+    background: rgba(135, 206, 235, 0.2);
+    border-color: rgba(135, 206, 235, 0.4);
+    box-shadow: 0 0 15px rgba(135, 206, 235, 0.3);
+}
+
+.nav-icon {
+    font-size: 1.2em;
+}
+
+/* 主要內容區域調整 */
+.main-content {
+    min-width: 0;
+}
+
+header {
+    margin-bottom: 30px;
 }

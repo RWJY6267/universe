@@ -3,57 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>協作故事創作平台</title>
+    <title>群思泉湧 - 協作故事平台</title>
     <link rel="stylesheet" href="style.css">
     <!-- GUN.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gun/sea.js"></script>
 </head>
 <body>
-    <div id="app">
-        <h1>協作故事創作平台</h1>
-        
-        <div class="tabs">
-            <button class="tab-btn active" data-tab="history">歷史創作</button>
-            <button class="tab-btn" data-tab="editor">故事編輯</button>
-            <button class="tab-btn" data-tab="chat">聊天室</button>
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+    
+    <!-- 星名土星設計 -->
+    <div id="saturn-name">
+        <div class="saturn">
+            <div class="planet"></div>
+            <div class="rings"></div>
+            <span class="user-starname"></span>
         </div>
+    </div>
 
-        <div class="tab-content">
-            <!-- 歷史創作頁面 -->
-            <div id="history" class="tab-pane active">
-                <h2>歷史故事列表</h2>
-                <div id="story-list" class="story-list"></div>
+    <div class="layout-container">
+        <!-- 左側導航 -->
+        <nav class="side-nav">
+            <div class="nav-section history-nav">
+                <button class="tab-btn active" data-tab="history">
+                    <span class="nav-icon">⭐</span>
+                    故事星河
+                </button>
             </div>
+            <div class="nav-section chat-nav">
+                <button class="tab-btn" data-tab="chat">
+                    <span class="nav-icon">💫</span>
+                    繁星對話
+                </button>
+            </div>
+            <div class="nav-section editor-nav">
+                <button class="tab-btn" data-tab="editor">
+                    <span class="nav-icon">✨</span>
+                    創作星球
+                </button>
+            </div>
+        </nav>
 
-            <!-- 故事編輯頁面 -->
-            <div id="editor" class="tab-pane">
-                <div class="story-section">
-                    <h2>故事編輯</h2>
-                    <div class="story-container">
-                        <div id="story-content" class="story-display"></div>
-                        <div class="story-input">
-                            <textarea id="story-editor" placeholder="在這裡續寫故事..."></textarea>
-                            <button id="submit-story">發布內容</button>
+        <!-- 主要內容區 -->
+        <main class="main-content">
+            <header>
+                <h1>群思泉湧</h1>
+                <p class="subtitle">集眾人之思，匯群智之流</p>
+            </header>
+
+            <div class="tab-content">
+                <!-- 故事星河頁面 -->
+                <div id="history" class="tab-pane active">
+                    <h2>故事星河</h2>
+                    <div id="story-list" class="story-list"></div>
+                </div>
+
+                <!-- 創作星球頁面 -->
+                <div id="editor" class="tab-pane">
+                    <div class="story-section">
+                        <h2>創作星球</h2>
+                        <div class="story-container">
+                            <div id="story-content" class="story-display"></div>
+                            <div class="story-input">
+                                <textarea id="story-editor" placeholder="在這片星空中，寫下你的故事..."></textarea>
+                                <button id="submit-story">發布星光</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 繁星對話頁面 -->
+                <div id="chat" class="tab-pane">
+                    <div class="chat-section">
+                        <h2>繁星對話</h2>
+                        <div id="chat-messages" class="chat-display"></div>
+                        <div class="chat-input">
+                            <input type="text" id="message-input" placeholder="在星際間傳遞訊息..." />
+                            <button id="send-message">發送</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </main>
 
-            <!-- 聊天室頁面 -->
-            <div id="chat" class="tab-pane">
-                <div class="chat-section">
-                    <h2>即時聊天室</h2>
-                    <div id="chat-messages" class="chat-display"></div>
-                    <div class="chat-input">
-                        <input type="text" id="username" placeholder="你的名字" />
-                        <input type="text" id="message-input" placeholder="輸入訊息..." />
-                        <button id="send-message">發送</button>
-                    </div>
-                </div>
+        <!-- 個人軌域 -->
+        <div id="personal-orbit">
+            <div class="orbit-header">
+                <span class="story-count">0 個星光</span>
+            </div>
+            <div class="orbit-content">
+                <div class="my-stories"></div>
             </div>
         </div>
     </div>
+
+    <!-- 星名設定對話框 -->
+    <div id="starname-modal" class="modal">
+        <div class="modal-content">
+            <h2>為你的星光命名</h2>
+            <p>在這片浩瀚星空中，為自己取一個獨特的星名</p>
+            <div class="input-group">
+                <input type="text" id="starname-input" placeholder="輸入你的星名..." maxlength="20">
+                <button id="starname-submit">開始航行</button>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>

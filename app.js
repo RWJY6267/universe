@@ -1,11 +1,96 @@
 // 初始化 GUN 實例
 const gun = Gun({
-    peers: ['http://gun-matrix.herokuapp.com/gun'] // 這是一個公共的 GUN peer，您也可以設置自己的伺服器
+    peers: ['http://gun-matrix.herokuapp.com/gun']
 });
 
 // 建立故事和聊天的資料節點
 const story = gun.get('collaborative-story');
 const chat = gun.get('chat-messages');
+const users = gun.get('users');
+
+// 星名設定和個人軌域功能
+let currentUser = {
+    starname: localStorage.getItem('starname') || '',
+    stories: []
+};
+
+// 星名設定對話框功能
+const starnameModal = document.getElementById('starname-modal');
+const starnameInput = document.getElementById('starname-input');
+const starnameSubmit = document.getElementById('starname-submit');
+const userStarnameDisplay = document.querySelector('.user-starname');
+
+// 檢查是否需要顯示星名設定對話框
+function checkStarname() {
+    if (!currentUser.starname) {
+        starnameModal.classList.remove('hidden');
+    } else {
+        starnameModal.classList.add('hidden');
+        updateUserDisplay();
+    }
+}
+
+// 設定星名
+starnameSubmit.addEventListener('click', () => {
+    const starname = starnameInput.value.trim();
+    if (starname) {
+        currentUser.starname = starname;
+        localStorage.setItem('starname', starname);
+        starnameModal.classList.add('hidden');
+        updateUserDisplay();
+        // 更新使用者資料
+        users.get(starname).put({
+            starname: starname,
+            joinDate: Date.now()
+        });
+    }
+});
+
+// 更新個人軌域顯示
+function updateUserDisplay() {
+    userStarnameDisplay.textContent = currentUser.starname;
+    updatePersonalStories();
+}
+
+// 更新個人故事列表
+function updatePersonalStories() {
+    const myStories = document.querySelector('.my-stories');
+    myStories.innerHTML = '';
+    
+    story.map().once((data, id) => {
+        if (data && data.author === currentUser.starname) {
+            const storyCard = document.createElement('div');
+            storyCard.className = 'my-story-card';
+            const preview = data.content.length > 50 
+                ? data.content.substring(0, 50) + '...' 
+                : data.content;
+            
+            storyCard.innerHTML = `
+                <div class="my-story-preview">${preview}</div>
+                <div class="my-story-date">${new Date(data.timestamp).toLocaleDateString()}</div>
+            `;
+            
+            storyCard.addEventListener('click', () => {
+                // 切換到編輯頁面
+                document.querySelectorAll('.tab-btn').forEach(tab => {
+                    if (tab.dataset.tab === 'editor') {
+                        tab.click();
+                    }
+                });
+            });
+            
+            myStories.appendChild(storyCard);
+            updateStoryCount();
+        }
+    });
+}
+
+// 更新故事數量
+function updateStoryCount() {
+    const storyCountElement = document.querySelector('.story-count');
+    let count = document.querySelectorAll('.my-story-card').length;
+    storyCountElement.textContent = `${count} 個星光`;
+}
 
 // 分頁切換功能
 function initTabs() {
@@ -94,6 +179,7 @@ story.map().on((data, id) => {
     if (data && data.content) {
         updateStoryDisplay();
         updateStoryList();
+        updatePersonalStories();
     }
 });
 
@@ -132,8 +218,9 @@ function updateStoryDisplay() {
 
 // 提交故事內容
 submitStory.addEventListener('click', () => {
-    if (!username) {
-        alert('請先輸入您的名字！');
+    if (!currentUser.starname) {
+        alert('請先設定你的星名！');
+        checkStarname();
         return;
     }
     if (!storyEditor.value.trim()) {
@@ -143,7 +230,7 @@ submitStory.addEventListener('click', () => {
 
     const content = storyEditor.value.trim();
     story.set({
-        author: username,
+        author: currentUser.starname,
         content: content,
         timestamp: Date.now()
     });
@@ -200,8 +287,9 @@ messageInput.addEventListener('keypress', (e) => {
 });
 
 function sendChatMessage() {
-    if (!username) {
-        alert('請先輸入您的名字！');
+    if (!currentUser.starname) {
+        alert('請先設定你的星名！');
+        checkStarname();
         return;
     }
     if (!messageInput.value.trim()) {
@@ -210,7 +298,7 @@ function sendChatMessage() {
 
     const message = messageInput.value.trim();
     chat.set({
-        author: username,
+        author: currentUser.starname,
         message: message,
         timestamp: Date.now()
     });
@@ -220,5 +308,15 @@ function sendChatMessage() {
 // 初始化頁面
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
+    checkStarname();
     updateStoryList();
+    
+    // 監聽故事變化
+    story.map().on((data, id) => {
+        if (data && data.content) {
+            updateStoryDisplay();
+            updateStoryList();
+            updatePersonalStories();
+        }
+    });
 });
